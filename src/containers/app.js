@@ -13,14 +13,24 @@ export class App extends Component {
   componentWillMount() {
   }
 
+  createMessage() {
+    const { turn, winner, movesLeft } = this.props
+    if (winner) {
+      return `PLAYER ${winner} WINS`
+    } else if (!movesLeft) {
+      return `WE HAVE A TIE!`
+    } else {
+      return `PLAYER ${turn} TURN`
+    }
+  }
+
   render() {
     const { turn, winner, newGameClick } = this.props;
-    const turnProps = { turn, winner }
 
     return (
       <div className="app-container">
         <Board />
-        <Turn className='turn' { ...turnProps } />
+        <Turn className='turn' message={this.createMessage()} />
         <NewGame newClick={newGameClick} />
       </div>
     );
@@ -34,9 +44,9 @@ const mapDispatchToProps = (dispatch) => {
 }
 
 const mapStateToProps = (state) => {
-  const { turn, winner } = state.gameData;
+  const { turn, winner, movesLeft } = state.gameData;
   return { 
-    turn, winner
+    turn, winner, movesLeft
   }
 }
 

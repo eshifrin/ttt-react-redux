@@ -11,8 +11,8 @@ export class Board extends Component {
   }
 
   boxClick(idx) {
-    const winner = this.props.winner;
-    if (!winner) {
+    const { winner, movesLeft } = this.props;
+    if (!winner && movesLeft) {
       this.props.toggleSpot(idx);
     } else {
       return;
@@ -59,10 +59,10 @@ const mapDispatchToProps = (dispatch) => {
 }
 
 const mapStateToProps = (state) => {
-  let { board, turn, winner} = state.gameData
+  let { board, turn, winner, movesLeft } = state.gameData
 
   return {
-    board, turn, winner
+    board, turn, winner, movesLeft
   }
 }
 
